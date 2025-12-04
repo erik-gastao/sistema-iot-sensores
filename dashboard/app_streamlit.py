@@ -1,3 +1,7 @@
+# Dashboard Streamlit para Sistema IoT
+# Autor: Erik Gastão
+# Sistemas Distribuídos - 2025
+
 import streamlit as st
 import requests
 import pandas as pd
@@ -50,7 +54,7 @@ def fetch_readings(limit=50):
 
 # Título do Dashboard
 st.title("🌡️ Dashboard de Sensores IoT")
-st.markdown("**Monitoramento em tempo real dos sensores**")
+st.markdown("Monitoramento em tempo real dos sensores")
 
 # Botão para atualizar manualmente
 col1, col2 = st.columns([6, 1])
@@ -80,7 +84,7 @@ if summary_data:
             )
             st.caption(f"Última atualização: {datetime.fromisoformat(sensor['lastTimestamp'].replace('Z', '+00:00')).strftime('%d/%m/%Y %H:%M:%S')}")
 else:
-    st.warning("⚠️ Nenhum dado disponível. Verifique se a API está rodando.")
+    st.warning("Nenhum dado disponível. Verifique se a API está rodando.")
 
 st.divider()
 
@@ -138,12 +142,12 @@ if readings_data:
         st.metric("Última Leitura", latest_time.strftime('%H:%M:%S'))
     
 else:
-    st.warning("⚠️ Nenhuma leitura encontrada.")
+    st.warning("Nenhuma leitura encontrada.")
 
 # Footer
 st.divider()
-st.markdown("**Status da API:** 🟢 Online" if summary_data else "**Status da API:** 🔴 Offline")
-st.caption("Dashboard atualiza automaticamente. Use o botão 'Atualizar' para forçar atualização.")
+st.markdown("**Status da API:** Online" if summary_data else "**Status da API:** Offline")
+st.caption("Dashboard atualiza automaticamente a cada 5 segundos.")
 
 # Auto-refresh a cada 5 segundos
 time.sleep(5)

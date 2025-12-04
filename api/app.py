@@ -1,12 +1,15 @@
+# API REST para Sistema IoT de Sensores
+# Autor: Erik Gastão
+# Sistemas Distribuídos - 2025
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
 import os
 
 app = Flask(__name__)
-CORS(app)  # Permite que o dashboard acesse a API
+CORS(app)
 
-# Caminho do banco de dados
 DB_PATH = os.path.join(os.path.dirname(__file__), 'sensor_data.db')
 
 def init_db():
@@ -26,7 +29,7 @@ def init_db():
     
     conn.commit()
     conn.close()
-    print("✅ Banco de dados inicializado!")
+    print("Banco de dados inicializado")
 
 @app.route('/api/sensor/data', methods=['POST'])
 def receive_sensor_data():
@@ -58,7 +61,7 @@ def receive_sensor_data():
         conn.commit()
         conn.close()
         
-        print(f"✅ Dados recebidos: {sensor_id} = {value}")
+        print(f"Dados recebidos: {sensor_id} = {value}")
         
         return jsonify({
             'status': 'success',
@@ -66,7 +69,7 @@ def receive_sensor_data():
         }), 201
         
     except Exception as e:
-        print(f"❌ Erro: {e}")
+        print(f"Erro: {e}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -139,11 +142,7 @@ def get_sensor_summary():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    # Inicializa o banco de dados
     init_db()
-    
-    print("API IoT iniciando...")
+    print("API iniciando...")
     print("Aguardando dados em http://localhost:8080")
-    
-    # Inicia o servidor na porta 8080
     app.run(host='0.0.0.0', port=8080, debug=True)
